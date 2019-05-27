@@ -14,6 +14,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware'=> "can:e
   Route::get('/', 'DashboardController@dashboard')->name('admin.index');
   Route::resource('/category', 'CategoryController', ['as'=>'admin']);
   Route::resource('/supplier', 'SupplierController', ['as'=>'admin']);
+  Route::resource('/product', 'ProductController', ['as'=>'admin']);
+  Route::resource('/unit', 'UnitController', ['as'=>'admin']);
+  Route::resource('/subdivision', 'SubdivisionController', ['as'=>'admin']);
   Route::group(['prefix' => 'user_managment', 'namespace' => 'UserManagment', 'middleware'=> "can:admin, App\User"], function() {
     Route::resource('/user', 'UserController', ['as' => 'admin.user_managment']);
   });

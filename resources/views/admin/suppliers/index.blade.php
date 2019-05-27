@@ -33,6 +33,14 @@
                   <td>{{$supplier->address}}</td>
                   <td>{{$supplier->index}}</td>
                   <td>{{$supplier->phone_number}}</td>
+                  <td class="text-right">
+                    <form onsubmit="if(confirm('Удалить?')) {return true} else {return false}" action="{{route('admin.supplier.destroy', $supplier)}}" method="post">
+                      <input type="hidden" name="_method" value="delete">
+                      @csrf
+                      <a href="{{route('admin.supplier.edit', $supplier)}}"><i class="far fa-edit"></i></a>
+                      <button type="submit" class="btn"><i class="far fa-trash-alt"></i></button>
+                    </form>
+                  </td>
                 </tr>
               @empty
                 <tr>

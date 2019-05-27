@@ -17,7 +17,7 @@ class CreateSuppliersTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->integer('unp')->unique();
-            $table->string('country')->default('РБ');
+            $table->string('country');
             $table->string('city');
             $table->string('address');
             $table->integer('index');

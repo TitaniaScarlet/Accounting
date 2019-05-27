@@ -33,10 +33,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav mr-auto">
+            <div class="dropdown">
+              <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Справочники
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li class="dropdown-item"><a class="nav-link" href="{{route('admin.category.index')}}">Категории</a></li>
+                <li class="dropdown-item"><a class="nav-link" href="{{route('admin.supplier.index')}}">Поставщики</a></li>
+                <li class="dropdown-item"><a class="nav-link" href="{{route('admin.user_managment.user.index')}}">Пользователи</a></li>
+                <li class="dropdown-item"><a class="nav-link" href="{{route('admin.product.index')}}">Товары</a></li>
+                <li class="dropdown-item"><a class="nav-link" href="{{route('admin.unit.index')}}">Единицы измерения</a></li>
+                <li class="dropdown-item"><a class="nav-link" href="{{route('admin.subdivision.index')}}">Подразделения</a></li>
+              </div>
+            </div>
 
-            <li class="nav-item active"><a class="nav-link" href="{{route('admin.category.index')}}">Категории</a></li>
-            <li class="nav-item active"><a class="nav-link" href="{{route('admin.supplier.index')}}">Поставщики</a></li>
-            <li class="nav-item active"><a class="nav-link" href="{{route('admin.user_managment.user.index')}}">Пользователи</a></li>
 
           </ul>
 

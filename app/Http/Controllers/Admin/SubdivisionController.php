@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Supplier;
+use App\Subdivision;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class SupplierController extends Controller
+class SubdivisionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class SupplierController extends Controller
      */
     public function index()
     {
-      return view('admin.suppliers.index', [
-        'suppliers' => Supplier::paginate(10),
-      ]);
+        return view('admin.subdivisions.index', [
+          'subdivisions' => Subdivision::paginate(10)
+        ]);
     }
 
     /**
@@ -27,9 +27,9 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('admin.suppliers.create', [
-          'supplier' => [],
-          ]);
+        return view('admin.subdivisions.create', [
+          'subdivision' => []
+        ]);
     }
 
     /**
@@ -40,17 +40,17 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        Supplier::create($request->all());
-        return redirect()->route('admin.supplier.index');
+      Subdivision::create($request->all());
+     return redirect()->route('admin.subdivision.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Supplier  $supplier
+     * @param  \App\Subdivision  $subdivision
      * @return \Illuminate\Http\Response
      */
-    public function show(Supplier $supplier)
+    public function show(Subdivision $subdivision)
     {
         //
     }
@@ -58,13 +58,13 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Supplier  $supplier
+     * @param  \App\Subdivision  $subdivision
      * @return \Illuminate\Http\Response
      */
-    public function edit(Supplier $supplier)
+    public function edit(Subdivision $subdivision)
     {
-        return view('admin.suppliers.edit', [
-          'supplier' => $supplier
+        return view('admin.subdivisions.edit', [
+          'subdivision' => $subdivision
         ]);
     }
 
@@ -72,24 +72,24 @@ class SupplierController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Supplier  $supplier
+     * @param  \App\Subdivision  $subdivision
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request, Subdivision $subdivision)
     {
-         $supplier->update($request->all());
-         return redirect()->route('admin.supplier.index');
+      $subdivision->update($request->except('slug'));
+      return redirect()->route('admin.subdivision.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Supplier  $supplier
+     * @param  \App\Subdivision  $subdivision
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Supplier $supplier)
+    public function destroy(Subdivision $subdivision)
     {
-      $supplier->delete();
-  return redirect()->route('admin.supplier.index');
+      $subdivision->delete();
+        return redirect()->route('admin.subdivision.index');
     }
 }

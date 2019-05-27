@@ -18,5 +18,8 @@ public function children() {
    return $this->hasMany(self::class, 'parent_id');
 }
 
+public function products() {
+    return $this->belongsToMany('App\Product');
+  }
 
 }

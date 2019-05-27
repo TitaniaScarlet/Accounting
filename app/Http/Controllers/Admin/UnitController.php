@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Supplier;
+use App\Unit;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class SupplierController extends Controller
+class UnitController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-      return view('admin.suppliers.index', [
-        'suppliers' => Supplier::paginate(10),
+      return view('admin.units.index', [
+        'units' => Unit::paginate(10),
       ]);
     }
 
@@ -27,9 +27,9 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('admin.suppliers.create', [
-          'supplier' => [],
-          ]);
+        return view('admin.units.create', [
+          'unit' => []
+        ]);
     }
 
     /**
@@ -40,17 +40,17 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        Supplier::create($request->all());
-        return redirect()->route('admin.supplier.index');
-    }
+        $unit = Unit::create($request->all());
+          return redirect()->route('admin.unit.index');
+     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Supplier  $supplier
+     * @param  \App\Unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function show(Supplier $supplier)
+    public function show(Unit $unit)
     {
         //
     }
@@ -58,38 +58,38 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Supplier  $supplier
+     * @param  \App\Unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function edit(Supplier $supplier)
+    public function edit(Unit $unit)
     {
-        return view('admin.suppliers.edit', [
-          'supplier' => $supplier
-        ]);
+       return view('admin.units.edit', [
+         'unit' => $unit
+       ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Supplier  $supplier
+     * @param  \App\Unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request, Unit $unit)
     {
-         $supplier->update($request->all());
-         return redirect()->route('admin.supplier.index');
+        $unit->update($request->all());
+        return redirect()->route('admin.unit.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Supplier  $supplier
+     * @param  \App\Unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Supplier $supplier)
+    public function destroy(Unit $unit)
     {
-      $supplier->delete();
-  return redirect()->route('admin.supplier.index');
+          $unit->delete();
+          return redirect()->route('admin.unit.index');
     }
 }
