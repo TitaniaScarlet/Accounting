@@ -18,8 +18,8 @@ class CreateProductsTable extends Migration
       $table->bigIncrements('id');
       $table->string('product_name');
       $table->string('slug')->unique();
-      $table->integer('quantity');
-      $table->biginteger('unit_id')->nullable();    
+      $table->integer('quantity')->nullable();
+      $table->biginteger('unit_id')->nullable();
       $table->string('manufacturer');
       $table->string('country');
       $table->timestamps();

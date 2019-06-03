@@ -46,7 +46,7 @@
                 <li class="dropdown-item"><a class="nav-link" href="{{route('admin.subdivision.index')}}">Подразделения</a></li>
               </div>
             </div>
-
+<li class="nav-item active"><a class="nav-link" href="{{route('admin.transference.index')}}">Движение товаров</a></li>
 
           </ul>
 

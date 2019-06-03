@@ -31,11 +31,7 @@
                     <p class="list-group-item-text">{{$category->title}}</p>
                   @endforeach
                 </td>
-                  <td>{{$product->quantity}} {{$product->unit->type}}
-                {{-- @foreach ($units->product as $unit)
-                  {{$unit->type ?? ""}}
-                @endforeach --}}
-                             </td>
+                  <td>{{$product->quantity}} {{$product->unit->type}}</td>
                   <td>{{$product->manufacturer}}</td>
                   <td>{{$product->country}}</td>
                   <td class="text-right">

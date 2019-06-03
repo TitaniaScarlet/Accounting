@@ -12,4 +12,9 @@ class Unit extends Model
  {
    return $this->hasMany('App\Product');
  }
+
+ public function transferences()
+{
+  return $this->hasMany('App\Transference');
+}
 }

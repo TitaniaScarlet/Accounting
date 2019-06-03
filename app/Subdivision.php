@@ -12,4 +12,7 @@ class Subdivision extends Model
     public function setSlugAttribute($value) {
     $this->attributes['slug'] = Str::slug(mb_substr($this->name, 0, 40) . "-" . \Carbon\Carbon::now()->format('dmyHi'), '-');
     }
+    public function transferences() {
+        return $this->belongsToMany('App\Transference');
+      }
 }

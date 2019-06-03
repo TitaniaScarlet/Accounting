@@ -22,7 +22,6 @@ class ProductController extends Controller
 
     return view('admin.products.index', [
       'products' => Product::paginate(10),
-// 'units' => Unit::with('product')->get()
     ]);
   }
 
