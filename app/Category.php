@@ -21,5 +21,11 @@ public function children() {
 public function products() {
     return $this->belongsToMany('App\Product');
   }
-
+  // public function menus() {
+  //     return $this->belongsToMany('App\Menu');
+  //   }
+    public function ingredients()
+   {
+     return $this->hasMany('App\Ingredient');
+   }
 }

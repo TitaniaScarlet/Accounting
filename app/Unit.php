@@ -17,4 +17,13 @@ class Unit extends Model
 {
   return $this->hasMany('App\Transference');
 }
+// public function menus()
+// {
+//  return $this->hasMany('App\Category_menu');
+// }
+public function ingredients()
+{
+ return $this->hasMany('App\Ingredient');
+}
+
 }

@@ -18,6 +18,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware'=> "can:e
   Route::resource('/unit', 'UnitController', ['as'=>'admin']);
   Route::resource('/subdivision', 'SubdivisionController', ['as'=>'admin']);
   Route::resource('/transference', 'TransferenceController', ['as'=>'admin']);
+  Route::resource('/menu', 'MenuController', ['as'=>'admin']);
+  Route::resource('/ingredient', 'IngredientController', ['as'=>'admin']);
   Route::group(['prefix' => 'user_managment', 'namespace' => 'UserManagment', 'middleware'=> "can:admin, App\User"], function() {
     Route::resource('/user', 'UserController', ['as' => 'admin.user_managment']);
   });

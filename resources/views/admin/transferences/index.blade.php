@@ -1,6 +1,9 @@
 @extends('admin.layouts.app_admin')
 
 @section('content')
+<div class="container">
+
+
       @component('admin.components.breadcrumb')
       @slot('title') Список движения товаров @endslot
         @slot('parent') Главная @endslot
@@ -20,7 +23,7 @@
               <th>Наименование</th>
               <th>Поставщик</th>
               <th>Количество</th>
-              <th>Цена</th>
+              <th>Цена, р.</th>
               <th class="text-right">Действие</th>
             </thead>
             <tbody>
@@ -46,7 +49,7 @@
                       @endforeach
                     </td>
                   <td>{{$transference->quantity}} {{$transference->unit->type}}</td>
-                  <td>{{$transference->price}} р.</td>
+                  <td>{{$transference->price}}</td>
                   <td class="text-right">
                     <form onsubmit="if(confirm('Удалить?')) {return true} else {return false}" action="{{route('admin.transference.destroy', $transference)}}" method="post">
                       <input type="hidden" name="_method" value="delete">
@@ -72,5 +75,5 @@
               </tr>
             </tfoot>
           </table>
-
+</div>
       @endsection
