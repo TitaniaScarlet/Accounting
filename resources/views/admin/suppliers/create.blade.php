@@ -13,6 +13,7 @@
           <form class="form-horizontal" action="{{route('admin.supplier.store')}}" method="post">
             @csrf
             @include('admin.suppliers.partials.form')
+            
           </form>
 
         </div>

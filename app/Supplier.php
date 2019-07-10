@@ -11,4 +11,17 @@ class Supplier extends Model
       public function transferences() {
           return $this->belongsToMany('App\Transference');
         }
+
+        public function phones()
+        {
+         return $this->hasMany('App\Phone');
+        }
+        public function accounts()
+        {
+         return $this->hasMany('App\Account');
+        }
+        public function contracts()
+        {
+         return $this->hasMany('App\Contract');
+        }
 }

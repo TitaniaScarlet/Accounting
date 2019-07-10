@@ -14,7 +14,7 @@
 <form class="form-horizontal" action="{{route('admin.supplier.update', $supplier)}}" method="post">
   @method('PUT')
     @csrf
-    @include('admin.suppliers.partials.form')
+    @include('admin.suppliers.partials.form_edit')
 </form>
   </div>
 @endsection

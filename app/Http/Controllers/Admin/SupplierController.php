@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Supplier;
+use App\Phone;
+use App\Account;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -11,7 +13,8 @@ class SupplierController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response  return redirect()->route('admin.phone.index');
+
      */
     public function index()
     {
@@ -29,6 +32,7 @@ class SupplierController extends Controller
     {
         return view('admin.suppliers.create', [
           'supplier' => [],
+          // 'phone' => []
           ]);
     }
 
@@ -40,7 +44,38 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        Supplier::create($request->all());
+        $supplier = Supplier::create([
+          'title' => $request['title'],
+          'unp' =>$request['unp'],
+          'address' => $request['address'],
+          'address_legal' => $request['address_legal'],
+          'index' => $request['index'],
+          'index_legal' => $request['index_legal'],
+           'email' => $request['email']
+        ]);
+        if($request->code) {
+          Phone::create([
+            'supplier_id' => $supplier->id,
+            'code' => $request['code'],
+            'number' => $request['number'],
+            'operator' => $request['operator'],
+          ]);
+        }
+        if($request->bank_account) {
+          Account::create([
+            'supplier_id' => $supplier->id,
+            'bank_account' => $request['bank_account'],
+            'bank' => $request['bank'],
+          ]);
+        }
+        if($request->contract_number) {
+          Contract::create([
+            'supplier_id' => $supplier->id,
+            'date' => $request['date'],
+            'number' => $request['contract_number'],
+          ]);
+        }
+
         return redirect()->route('admin.supplier.index');
     }
 
@@ -52,7 +87,9 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        //
+        return view('admin.suppliers.show', [
+          'supplier' => $supplier
+        ]);
     }
 
     /**
@@ -63,8 +100,10 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
+      // $phones = Phone::with('supplier')->get();
+      // $accounts = Account::with('supplier')->get();
         return view('admin.suppliers.edit', [
-          'supplier' => $supplier
+          'supplier' => $supplier,
         ]);
     }
 

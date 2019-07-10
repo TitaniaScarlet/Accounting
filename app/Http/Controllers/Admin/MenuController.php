@@ -6,6 +6,7 @@ use App\Menu;
 use App\Unit;
 use App\Category;
 use App\Ingredient;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -39,6 +40,7 @@ class MenuController extends Controller
       'delimiter' => '',
       'units' => Unit::get(),
       'categories' => Category::get(),
+
     ]);
   }
 

@@ -19,6 +19,7 @@ class CreateSupplierTransferenceTable extends Migration
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
             $table->biginteger('transference_id')->unsigned();
             $table->foreign('transference_id')->references('id')->on('transferences')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

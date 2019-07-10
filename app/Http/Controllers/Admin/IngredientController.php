@@ -29,10 +29,12 @@ class IngredientController extends Controller
     public function create()
     {
         $units = Unit::with('ingredients')->get();
-        $categories = Category::with('ingredients')->get();
+        $categories = Category::with('children')->where('parent_id',  0)->get();
+         $children = Category::with('children')->where('parent_id', '>',  0)->get();
               return [
             'units' => json_encode($units),
           'categories'=> json_encode($categories),
+           'children' => json_encode($children),
         ];
     }
 
@@ -45,15 +47,16 @@ class IngredientController extends Controller
     public function store(Request $request)
     {
       if($request->has('menu') && $request->has('category') && $request->has('quantity') && $request->has('unit')) {
-        $menu = Menu::with('ingredients')->where('id', $request->input('menu'))->first();
-          Ingredient::create([
+         // $menu = Menu::with('ingredients')->where('id', $request->menu)->first();
+        $ingredient = Ingredient::create([
             'category_id' => $request->input('category'),
             'menu_id' => $request->input('menu'),
             'quantity' => $request->input('quantity'),
             'unit_id' => $request->input('unit')
         ]);
-        return redirect()->route('admin.menu.show', $menu);
-      }
+            }
+             // $menu = Menu::where('id', $ingredient->menu_id)->first();
+      return redirect()->route('admin.menu.show', $ingredient->menu);
      }
 
     /**

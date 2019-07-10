@@ -22,6 +22,9 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('form-component', require('./components/FormComponent.vue').default);
 Vue.component('tree-component', require('./components/TreeComponent.vue').default);
+Vue.component('phone-component', require('./components/PhoneComponent.vue').default);
+Vue.component('account-component', require('./components/AccountComponent.vue').default);
+Vue.component('contract-component', require('./components/ContractComponent.vue').default);
 
 
 /**

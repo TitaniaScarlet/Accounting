@@ -20,6 +20,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware'=> "can:e
   Route::resource('/transference', 'TransferenceController', ['as'=>'admin']);
   Route::resource('/menu', 'MenuController', ['as'=>'admin']);
   Route::resource('/ingredient', 'IngredientController', ['as'=>'admin']);
+  Route::resource('/phone', 'PhoneController', ['as'=>'admin']);
+  Route::resource('/account', 'AccountController', ['as'=>'admin']);
+  Route::resource('/contract', 'ContractController', ['as'=>'admin']);
+
   Route::group(['prefix' => 'user_managment', 'namespace' => 'UserManagment', 'middleware'=> "can:admin, App\User"], function() {
     Route::resource('/user', 'UserController', ['as' => 'admin.user_managment']);
   });

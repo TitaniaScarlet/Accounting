@@ -1,13 +1,25 @@
-<!-- <template>
+<template>
 
-            <option  v-for="category in categories" v-bind:value= "category.id" >
-            </option>
+  <option>- {{child.title}}</option>
 
+</select>
 </template>
 
 <script>
 export default {
-  props: ['categories'],
-
+props: {
+child: []
+},
+data: function() {
+  return {
+delimiter: '-'
+  };
+},
+// watch: {
+//   category: function(newChildId, oldChildId) {
+//     console.log(newChildId)
+//   this.$emit('category', newChildId);
+// }
+// },
 }
-</script> -->
+</script>

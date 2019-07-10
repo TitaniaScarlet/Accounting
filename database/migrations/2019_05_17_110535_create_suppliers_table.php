@@ -17,11 +17,11 @@ class CreateSuppliersTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->integer('unp')->unique();
-            $table->string('country');
-            $table->string('city');
-            $table->string('address');
-            $table->integer('index');
-            $table->integer('phone_number');
+            $table->string('address')->nullable();
+            $table->string('address_legal')->nullable();
+            $table->integer('index')->nullable();
+            $table->integer('index_legal')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }
