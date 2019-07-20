@@ -34,8 +34,8 @@
                       <p class="list-group-item-text">{{$subdivision->name}}</p>
                     @endforeach
                   </td>
-                  <td>{{$transference->ttn}}</td>
-                  <td>{{$transference->date}}</td>
+                  <td>{{$transference->ttn->number}}</td>
+                  <td>{{$transference->ttn->date}}</td>
                   <td>
                     @foreach ($transference->product->categories as $category)
                 <p class="list-group-item-text">{{$category->title}}</p>
@@ -43,13 +43,9 @@
             </td>
                   <td>{{$transference->product->product_name}}, {{$transference->product->manufacturer}},
                     {{$transference->product->quantity}} {{$transference->product->unit->type}}</td>
-                    <td>
-                      @foreach ($transference->suppliers as $supplier)
-                        <p class="list-group-item-text">{{$supplier->title}}</p>
-                      @endforeach
-                    </td>
+                    <td>{{$transference->ttn->supplier->title}}</td>
                   <td>{{$transference->quantity}} {{$transference->unit->type}}</td>
-                  <td>{{$transference->price}}</td>
+                  <td>{{$transference->accounting_price}}</td>
                   <td class="text-right">
                     <form onsubmit="if(confirm('Удалить?')) {return true} else {return false}" action="{{route('admin.transference.destroy', $transference)}}" method="post">
                       <input type="hidden" name="_method" value="delete">

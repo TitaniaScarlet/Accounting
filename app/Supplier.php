@@ -24,4 +24,8 @@ class Supplier extends Model
         {
          return $this->hasMany('App\Contract');
         }
-}
+        public function ttns()
+        {
+         return $this->hasMany('App\Ttn');
+        }
+        }

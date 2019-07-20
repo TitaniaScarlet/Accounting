@@ -15,13 +15,14 @@ class CreateTransferencesTable extends Migration
     {
         Schema::create('transferences', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('date');
             $table->string('slug')->unique();
-            $table->string('ttn');
+            $table->string('ttn_id');
+            $table->date('date')->nullable();
             $table->biginteger('product_id')->nullable();
             $table->integer('quantity');
             $table->biginteger('unit_id')->nullable();
             $table->decimal('price');
+            $table->decimal('accounting_price');
             $table->timestamps();
         });
     }

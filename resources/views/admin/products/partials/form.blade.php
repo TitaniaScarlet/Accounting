@@ -35,7 +35,14 @@
   <label for="">Еденица измерения</label>
     <select class="form-control" name="units">
       @foreach ($units as $unit)
-        <option value="{{$unit->id ?? ""}}">{{$unit->type ?? ""}}</option>
+        <option value="{{$unit->id ?? ""}}"
+              @isset($product->unit_id)
+
+                @if ($product->unit_id == $unit->id)
+            selected=""
+                @endif
+          @endisset
+          >{{$unit->type ?? ""}}</option>
       @endforeach
 </div>
 </div>

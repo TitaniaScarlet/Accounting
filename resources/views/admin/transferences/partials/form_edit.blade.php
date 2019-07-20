@@ -33,15 +33,14 @@
 <div class="row">
   <div class="col-sm-3">
     <label for="">Серия и номер ТТН</label>
-    <input type="text" class="form-control" name="ttn" placeholder="Серия и номер ТТН" value="{{$transference->ttn ?? ""}}" maxlength="9" readonly="">
+    <input type="text" class="form-control" name="ttn" placeholder="Серия и номер ТТН" value="{{$transference->ttn->number ?? ""}}" maxlength="9" readonly="">
     <br>
     <label for="">Количество</label>
     <input type="text" class="form-control" name="quantity" placeholder="Количество" value="{{$transference->quantity ?? ""}}" required>
   </div>
-
   <div class="col-sm-3">
     <label for="">Дата перемещения</label>
-    <input type="date" class="form-control" name="date" placeholder="Дата поступления" value="{{$transference->date ?? ""}}" required>
+    <input type="date" class="form-control" name="date" placeholder="Дата поступления" value="{{$transference->ttn->date ?? ""}}" required>
     <br>
     <label for="">Еденица измерения</label>
     <input type="text" class="form-control" name="unit_id" placeholder="Количество" value="{{$transference->unit->type}} " readonly="">
@@ -50,18 +49,16 @@
 
   <div class="col-sm-3">
     <label for="">Поставщик</label>
-    @foreach ($transference->suppliers as $supplier)
-      <input type="text" class="form-control" name="suppliers" placeholder="Дата поступления" value="{{$supplier->title ?? ""}}" readonly="">
-    @endforeach
+      <input type="text" class="form-control" name="suppliers" placeholder="Дата поступления" value="{{$transference->ttn->supplier->title ?? ""}}" readonly="">
     <br>
     <label for="">Цена</label>
-    <input type="text" class="form-control" name="price" value="{{$transference->price ?? ""}}" readonly="">
+    <input type="text" class="form-control" name="price" value="{{$transference->accounting_price ?? ""}}" readonly="">
   </div>
 
-<div class="col-sm-3">
+{{-- <div class="col-sm-3">
   <label for="">Slug</label>
   <input type="text" class="form-control" name="slug" placeholder="Автоматическая генерация" value="{{$transference->slug ?? ""}}" readonly="">
-</div>
+</div> --}}
 
 
 </div>

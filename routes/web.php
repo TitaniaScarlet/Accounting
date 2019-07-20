@@ -18,11 +18,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware'=> "can:e
   Route::resource('/unit', 'UnitController', ['as'=>'admin']);
   Route::resource('/subdivision', 'SubdivisionController', ['as'=>'admin']);
   Route::resource('/transference', 'TransferenceController', ['as'=>'admin']);
+  Route::resource('/ttn', 'TtnController', ['as'=>'admin']);
   Route::resource('/menu', 'MenuController', ['as'=>'admin']);
   Route::resource('/ingredient', 'IngredientController', ['as'=>'admin']);
   Route::resource('/phone', 'PhoneController', ['as'=>'admin']);
   Route::resource('/account', 'AccountController', ['as'=>'admin']);
   Route::resource('/contract', 'ContractController', ['as'=>'admin']);
+  Route::get('/json', 'JsonController@json')->name('admin.json');
+  Route::post('/json/ttn', 'JsonController@ttn')->name('admin.ttn');
 
   Route::group(['prefix' => 'user_managment', 'namespace' => 'UserManagment', 'middleware'=> "can:admin, App\User"], function() {
     Route::resource('/user', 'UserController', ['as' => 'admin.user_managment']);

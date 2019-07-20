@@ -25,6 +25,7 @@ Vue.component('tree-component', require('./components/TreeComponent.vue').defaul
 Vue.component('phone-component', require('./components/PhoneComponent.vue').default);
 Vue.component('account-component', require('./components/AccountComponent.vue').default);
 Vue.component('contract-component', require('./components/ContractComponent.vue').default);
+Vue.component('ttn-component', require('./components/TtnComponent.vue').default);
 
 
 /**

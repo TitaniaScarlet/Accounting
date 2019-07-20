@@ -7,8 +7,11 @@ use App\Product;
 use App\Unit;
 use App\Subdivision;
 use App\Supplier;
+use App\Vat;
+use App\Ttn;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+// use JsonController;
 
 class TransferenceController extends Controller
 {
@@ -20,10 +23,11 @@ class TransferenceController extends Controller
   public function index()
   {
     return view('admin.transferences.index', [
-      'transferences' => Transference::orderBy('date')->paginate(10),
+      'transferences' => Transference::paginate(10),
       'products' => Product::get()
     ]);
   }
+
 
   /**
   * Show the form for creating a new resource.
@@ -37,7 +41,7 @@ class TransferenceController extends Controller
       'products' => Product::with('transferences')->get(),
       'units' => Unit::with('transferences')->get(),
       'subdivisions' => Subdivision::get(),
-      'suppliers' => Supplier::get()
+      // 'suppliers' => Supplier::get()
     ]);
   }
 
@@ -49,21 +53,42 @@ class TransferenceController extends Controller
   */
   public function store(Request $request)
   {
+    // if($request->has('ttn')) {
+    //   Cache::put('ttn', $request->input('ttn'), \Carbon\Carbon::now()->addMinutes(10));
+    // }
+//     if ($request->session()->has('users'))
+// {
+//     $ttn = $request->session()->pull('ttn', $request->input('ttn'));
+// }
+if ($request->session()->has('ttn')) {
+
     $transference = Transference::create([
-      'ttn' => $request['ttn'],
-      'date' => $request['date'],
       'product_id' => $request->input('product_id'),
       'quantity' => $request['quantity'],
       'unit_id' => $request->input('unit_id'),
       'price' => $request['price'],
-      'slug' => $request['slug']
+      'slug' => $request['slug'],
+      'accounting_price' => $request['accounting_price'],
+      'ttn_id' => $request->session()->get('ttn'),
+
     ]);
+    $request->session()->forget('ttn');
+      }
+    if($request->vat_rate && $request->vat_input) {
+      Vat::create([
+        // 'date' => $transference->ttn->date,
+'vat_rate' => $request['vat_rate'],
+'vat_input' => $request['vat_input'],
+'vatable_id' => $transference->id,
+'vatable_type' => 'App\Transference'
+      ]);
+    }
     if($request->input('subdivisions')) :
       $transference->subdivisions()->attach($request->input('subdivisions'));
     endif;
-    if($request->input('suppliers')) :
-      $transference->suppliers()->attach($request->input('suppliers'));
-    endif;
+    // if($request->input('suppliers')) :
+    //   $transference->suppliers()->attach($request->input('suppliers'));
+    // endif;
     return redirect()->route('admin.transference.index');
   }
 
@@ -75,7 +100,9 @@ class TransferenceController extends Controller
   */
   public function show(Transference $transference)
   {
-    //
+    return view('admin.transferences.show', [
+      'transference' => $transference
+    ]);
   }
 
   /**
@@ -112,18 +139,16 @@ class TransferenceController extends Controller
     }
     elseif ($request->quantity < $transference->quantity) {
       $transference_new = Transference::create([
-        'ttn' => $transference->ttn,
+        'ttn_id' => $transference->ttn_id,
         'date' => $request['date'],
         'product_id' => $transference->product_id,
         'quantity' => $request['quantity'],
         'unit_id' => $transference->unit_id,
+        'accounting_price' => $transference->accounting_price,
         'price' => $transference->price,
         'slug' => $request['slug']
       ]);
       $transference_new->subdivisions()->attach($request->input('subdivisions'));
-      foreach ($transference->suppliers as $supplier) {
-        $transference_new->suppliers()->attach($supplier->id);
-      }
       $new_quantity = $transference->quantity - $request->quantity;
       $transference->quantity = $new_quantity;
       $transference->save();

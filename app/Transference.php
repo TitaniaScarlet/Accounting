@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class Transference extends Model
 {
-  protected $fillable = ['date', 'ttn', 'product_id', 'quantity', 'unit_id', 'price', 'slug'];
+  protected $fillable = ['date', 'ttn_id', 'product_id', 'quantity', 'unit_id', 'price', 'slug', 'accounting_price'];
 
   public function setSlugAttribute($value) {
   $this->attributes['slug'] = Str::slug(mb_substr($this->ttn, 0, 40) . "-" . \Carbon\Carbon::now()->format('dmyHi'), '-');
@@ -25,5 +25,11 @@ class Transference extends Model
   public function subdivisions() {
     return $this->belongsToMany('App\Subdivision');
   }
-
+  public function vats()
+    {
+      return $this->morphMany('App\Vat', 'vatable');
+    }
+    public function ttn()  {
+      return $this->belongsTo('App\Ttn');
+    }
 }
