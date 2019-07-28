@@ -20,7 +20,6 @@
   </div>
 </div>
 
-  <input type="text" class="form-control" name="slug" placeholder="Автоматическая генерация" value="{{$transference->slug ?? ""}}" readonly="" hidden>
 <br>
 <ttn-component></ttn-component>
 <br>
@@ -40,7 +39,6 @@
       selected=""
           @endif
     @endisset
-
           >{{$unit->type ?? ""}}</option>
       @endforeach
     </select>

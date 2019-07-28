@@ -11,7 +11,6 @@ use App\Vat;
 use App\Ttn;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-// use JsonController;
 
 class TransferenceController extends Controller
 {
@@ -23,7 +22,7 @@ class TransferenceController extends Controller
   public function index()
   {
     return view('admin.transferences.index', [
-      'transferences' => Transference::paginate(10),
+      'transferences' => Transference::latest('date')->paginate(10),
       'products' => Product::get()
     ]);
   }
@@ -41,7 +40,7 @@ class TransferenceController extends Controller
       'products' => Product::with('transferences')->get(),
       'units' => Unit::with('transferences')->get(),
       'subdivisions' => Subdivision::get(),
-      // 'suppliers' => Supplier::get()
+      'ttns' => Ttn::get()
     ]);
   }
 
@@ -53,30 +52,20 @@ class TransferenceController extends Controller
   */
   public function store(Request $request)
   {
-    // if($request->has('ttn')) {
-    //   Cache::put('ttn', $request->input('ttn'), \Carbon\Carbon::now()->addMinutes(10));
-    // }
-//     if ($request->session()->has('users'))
-// {
-//     $ttn = $request->session()->pull('ttn', $request->input('ttn'));
-// }
 if ($request->session()->has('ttn')) {
-
     $transference = Transference::create([
       'product_id' => $request->input('product_id'),
       'quantity' => $request['quantity'],
       'unit_id' => $request->input('unit_id'),
       'price' => $request['price'],
-      'slug' => $request['slug'],
       'accounting_price' => $request['accounting_price'],
-      'ttn_id' => $request->session()->get('ttn'),
-
+      'ttn_id' => $request->session()->pull('ttn'),
+       'date' => $request->session()->pull('date')
     ]);
-    $request->session()->forget('ttn');
-      }
+    }
     if($request->vat_rate && $request->vat_input) {
       Vat::create([
-        // 'date' => $transference->ttn->date,
+'date' => $transference->date,
 'vat_rate' => $request['vat_rate'],
 'vat_input' => $request['vat_input'],
 'vatable_id' => $transference->id,
@@ -86,9 +75,6 @@ if ($request->session()->has('ttn')) {
     if($request->input('subdivisions')) :
       $transference->subdivisions()->attach($request->input('subdivisions'));
     endif;
-    // if($request->input('suppliers')) :
-    //   $transference->suppliers()->attach($request->input('suppliers'));
-    // endif;
     return redirect()->route('admin.transference.index');
   }
 
@@ -146,7 +132,6 @@ if ($request->session()->has('ttn')) {
         'unit_id' => $transference->unit_id,
         'accounting_price' => $transference->accounting_price,
         'price' => $transference->price,
-        'slug' => $request['slug']
       ]);
       $transference_new->subdivisions()->attach($request->input('subdivisions'));
       $new_quantity = $transference->quantity - $request->quantity;

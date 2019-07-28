@@ -15,7 +15,6 @@ class CreateTransferencesTable extends Migration
     {
         Schema::create('transferences', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('slug')->unique();
             $table->string('ttn_id');
             $table->date('date')->nullable();
             $table->biginteger('product_id')->nullable();

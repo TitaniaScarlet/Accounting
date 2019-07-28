@@ -40,7 +40,7 @@
   </div>
   <div class="col-sm-3">
     <label for="">Дата перемещения</label>
-    <input type="date" class="form-control" name="date" placeholder="Дата поступления" value="{{$transference->ttn->date ?? ""}}" required>
+    <input type="date" class="form-control" name="date" placeholder="Дата поступления" value="{{$transference->date ?? ""}}" required>
     <br>
     <label for="">Еденица измерения</label>
     <input type="text" class="form-control" name="unit_id" placeholder="Количество" value="{{$transference->unit->type}} " readonly="">
@@ -54,12 +54,6 @@
     <label for="">Цена</label>
     <input type="text" class="form-control" name="price" value="{{$transference->accounting_price ?? ""}}" readonly="">
   </div>
-
-{{-- <div class="col-sm-3">
-  <label for="">Slug</label>
-  <input type="text" class="form-control" name="slug" placeholder="Автоматическая генерация" value="{{$transference->slug ?? ""}}" readonly="">
-</div> --}}
-
 
 </div>
 

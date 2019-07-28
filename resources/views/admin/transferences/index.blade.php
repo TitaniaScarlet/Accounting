@@ -1,10 +1,10 @@
 @extends('admin.layouts.app_admin')
 
 @section('content')
-<div class="container">
+  <div class="container">
 
 
-      @component('admin.components.breadcrumb')
+    @component('admin.components.breadcrumb')
       @slot('title') Список движения товаров @endslot
         @slot('parent') Главная @endslot
           @slot('active') Движение товаров @endslot
@@ -35,41 +35,46 @@
                     @endforeach
                   </td>
                   <td>{{$transference->ttn->number}}</td>
-                  <td>{{$transference->ttn->date}}</td>
                   <td>
-                    @foreach ($transference->product->categories as $category)
-                <p class="list-group-item-text">{{$category->title}}</p>
-              @endforeach
-            </td>
-                  <td>{{$transference->product->product_name}}, {{$transference->product->manufacturer}},
-                    {{$transference->product->quantity}} {{$transference->product->unit->type}}</td>
-                    <td>{{$transference->ttn->supplier->title}}</td>
-                  <td>{{$transference->quantity}} {{$transference->unit->type}}</td>
-                  <td>{{$transference->accounting_price}}</td>
-                  <td class="text-right">
-                    <form onsubmit="if(confirm('Удалить?')) {return true} else {return false}" action="{{route('admin.transference.destroy', $transference)}}" method="post">
-                      <input type="hidden" name="_method" value="delete">
-                      @csrf
-                      <a href="{{route('admin.transference.edit', $transference)}}"><i class="fas fa-exchange-alt"></i></a>
-                      <button type="submit" class="btn"><i class="far fa-trash-alt"></i></button>
-                    </form>
-                  </td>
-                </tr>
-              @empty
-                <tr>
-                  <td colspan="9" class="text-center"><h4>Данные отсутствуют</h4></td>
-                </tr>
-              @endforelse
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="9">
-                  <ul class="pagination float-right">
-                    {{$transferences->links()}}
-                  </ul>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-</div>
-      @endsection
+                    @if ($transference->date)
+                      {{$transference->date}}
+                    @else
+                      {{$transference->ttn->date}}</td>
+                    @endif
+                    <td>
+                      @foreach ($transference->product->categories as $category)
+                        <p class="list-group-item-text">{{$category->title}}</p>
+                      @endforeach
+                    </td>
+                    <td><a href="{{route('admin.transference.show', $transference)}}">{{$transference->product->product_name}}, {{$transference->product->manufacturer}},
+                      {{$transference->product->quantity}} {{$transference->product->unit->type}}</a></td>
+                      <td>{{$transference->ttn->supplier->title}}</td>
+                      <td>{{$transference->quantity}} {{$transference->unit->type}}</td>
+                      <td>{{$transference->accounting_price}}</td>
+                      <td class="text-right">
+                        <form onsubmit="if(confirm('Удалить?')) {return true} else {return false}" action="{{route('admin.transference.destroy', $transference)}}" method="post">
+                          <input type="hidden" name="_method" value="delete">
+                          @csrf
+                          <a href="{{route('admin.transference.edit', $transference)}}"><i class="fas fa-exchange-alt"></i></a>
+                          <button type="submit" class="btn"><i class="far fa-trash-alt"></i></button>
+                        </form>
+                      </td>
+                    </tr>
+                  @empty
+                    <tr>
+                      <td colspan="9" class="text-center"><h4>Данные отсутствуют</h4></td>
+                    </tr>
+                  @endforelse
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="9">
+                      <ul class="pagination float-right">
+                        {{$transferences->links()}}
+                      </ul>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          @endsection

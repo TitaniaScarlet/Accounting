@@ -26,7 +26,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware'=> "can:e
   Route::resource('/contract', 'ContractController', ['as'=>'admin']);
   Route::get('/json', 'JsonController@json')->name('admin.json');
   Route::post('/json/ttn', 'JsonController@ttn')->name('admin.ttn');
-
+  Route::resource('/vat', 'VatController', ['as'=>'admin']);
   Route::group(['prefix' => 'user_managment', 'namespace' => 'UserManagment', 'middleware'=> "can:admin, App\User"], function() {
     Route::resource('/user', 'UserController', ['as' => 'admin.user_managment']);
   });

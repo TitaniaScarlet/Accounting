@@ -1384,7 +1384,7 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/axios/node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -1684,6 +1684,28 @@ module.exports = {
   extend: extend,
   trim: trim
 };
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/node_modules/is-buffer/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/axios/node_modules/is-buffer/index.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
 
 
 /***/ }),
@@ -2066,23 +2088,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // props: ['ttns'],
   data: function data() {
     return {
+      sortKey: 'date',
+      reverse: true,
       ttns: [],
       suppliers: [],
-      // products: [],
-      // units: [],
-      // subdivisions: [],
-      // categories: [],
-      number: '' // product: '',
-      // unit: '',
-      // subdivision: []
-
+      number: [],
+      date: '',
+      search: ''
     };
   },
   mounted: function mounted() {
     this.json();
+  },
+  computed: {
+    sortedTtns: function sortedTtns() {
+      var _this = this;
+
+      var k = this.sortKey;
+      return this.ttns.sort(function (a, b) {
+        return (a[k] < b[k] ? -1 : a[k] > b[k] ? 1 : 0) * [1, -1][+_this.reverse];
+      });
+    }
   },
   watch: {
     number: function number(newNumber, oldNumber) {
@@ -2091,23 +2119,22 @@ __webpack_require__.r(__webpack_exports__);
         method: 'post',
         url: '/admin/json/ttn',
         params: {
-          ttn: newNumber
+          ttn: newNumber.id,
+          date: newNumber.date
         }
       }).then(function (response) {
         console.log(response);
-      }); // this.$emit('ttn', '/admin/transference', newNumber);
+      });
     }
   },
   methods: {
     json: function json() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get('/admin/json').then(function (response) {
         console.log(response);
-        _this.ttns = JSON.parse(response.data.ttns);
-        _this.suppliers = JSON.parse(response.data.suppliers); // this.products = JSON.parse(response.data.products)
-        // this.units = JSON.parse(response.data.units)
-        // this.subdivisions = JSON.parse(response.data.subdivisions)
+        _this2.ttns = JSON.parse(response.data.ttns);
+        _this2.suppliers = JSON.parse(response.data.suppliers);
       });
     }
   }
@@ -6556,28 +6583,6 @@ __webpack_require__.r(__webpack_exports__);
 
 }));
 //# sourceMappingURL=bootstrap.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/is-buffer/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/is-buffer/index.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-module.exports = function isBuffer (obj) {
-  return obj != null && obj.constructor != null &&
-    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
 
 
 /***/ }),
@@ -37950,7 +37955,8 @@ var render = function() {
                 expression: "number"
               }
             ],
-            staticClass: "form-control",
+            staticClass: "custom-select",
+            attrs: { type: "text" },
             on: {
               change: function($event) {
                 var $$selectedVal = Array.prototype.filter
@@ -37967,8 +37973,8 @@ var render = function() {
               }
             }
           },
-          _vm._l(_vm.ttns, function(ttn) {
-            return _c("option", { domProps: { value: ttn.id } }, [
+          _vm._l(_vm.sortedTtns, function(ttn) {
+            return _c("option", { domProps: { value: ttn } }, [
               _vm._v(_vm._s(ttn.number))
             ])
           }),
@@ -37983,8 +37989,20 @@ var render = function() {
           _c("label", [_vm._v("Дата")]),
           _vm._v(" "),
           _vm._l(_vm.ttns, function(ttn) {
-            return ttn.id == _vm.number
-              ? _c("p", [_vm._v(_vm._s(ttn.date))])
+            return ttn.id == _vm.number.id
+              ? _c(
+                  "p",
+                  {
+                    model: {
+                      value: _vm.date,
+                      callback: function($$v) {
+                        _vm.date = $$v
+                      },
+                      expression: "date"
+                    }
+                  },
+                  [_vm._v(_vm._s(ttn.date))]
+                )
               : _vm._e()
           })
         ],
@@ -37998,11 +38016,11 @@ var render = function() {
           _c("label", [_vm._v("Поставщик")]),
           _vm._v(" "),
           _vm._l(_vm.ttns, function(ttn) {
-            return ttn.id == _vm.number
+            return ttn.id == _vm.number.id
               ? _c(
                   "p",
                   _vm._l(_vm.suppliers, function(supplier) {
-                    return supplier.id == ttn.id
+                    return supplier.id == ttn.supplier_id
                       ? _c("span", [_vm._v(_vm._s(supplier.title))])
                       : _vm._e()
                   }),

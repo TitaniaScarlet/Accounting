@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Vat;
+use App\Transference;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +16,10 @@ class VatController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.vats.index', [
+        'vats' => Vat::latest('date')->paginate(10),
+        'transferences' => Transference::get()
+        ]);
     }
 
     /**

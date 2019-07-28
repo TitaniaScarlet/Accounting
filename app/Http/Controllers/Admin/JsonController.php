@@ -31,12 +31,9 @@ class JsonController extends Controller
   }
 
   public function ttn(Request $request) {
-    if($request->has('ttn')) {
-      // $value = $request->input('ttn');
+    if($request->has('ttn')&&$request->has('date')) {
     $value = $request->session()->put('ttn', $request->input('ttn'));
-      // $minutes = \Carbon\Carbon::now()->addMinutes(10);
-      // Session::put('ttn', $value);
-      // Cache::put('ttn', $request->input('ttn'), $minutes);
+    $value = $request->session()->put('date', $request->input('date'));
     }
   }
 }

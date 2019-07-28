@@ -8,10 +8,6 @@ class Supplier extends Model
 {
       protected $fillable = ['title', 'unp', 'country', 'city', 'address', 'index', 'phone_number'];
 
-      public function transferences() {
-          return $this->belongsToMany('App\Transference');
-        }
-
         public function phones()
         {
          return $this->hasMany('App\Phone');
