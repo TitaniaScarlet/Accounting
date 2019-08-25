@@ -25,14 +25,7 @@ class PhoneController extends Controller
      */
     public function create()
     {
-      // $units = Unit::with('ingredients')->get();
-      // $categories = Category::with('children')->where('parent_id', 0)->get();
-      // $children = Category::with('children')->where('parent_id', '>',  0)->get();
-      //       return [
-      //     'units' => json_encode($units),
-      //   'categories'=> json_encode($categories),
-      //   'children' => json_encode($children),
-      // ];
+
     }
 
     /**

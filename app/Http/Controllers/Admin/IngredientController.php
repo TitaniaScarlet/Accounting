@@ -46,9 +46,8 @@ class IngredientController extends Controller
      */
     public function store(Request $request)
     {
-      
+
       if($request->has('menu') && $request->has('category') && $request->has('quantity') && $request->has('unit')) {
-         // $menu = Menu::with('ingredients')->where('id', $request->menu)->first();
         $ingredient = Ingredient::create([
             'category_id' => $request->input('category'),
             'menu_id' => $request->input('menu'),
@@ -56,7 +55,6 @@ class IngredientController extends Controller
             'unit_id' => $request->input('unit')
         ]);
             }
-             // $menu = Menu::where('id', $ingredient->menu_id)->first();
       return redirect()->route('admin.menu.show', $ingredient->menu);
      }
 

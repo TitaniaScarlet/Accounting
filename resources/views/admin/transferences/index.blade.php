@@ -1,7 +1,6 @@
 @extends('admin.layouts.app_admin')
 
 @section('content')
-  <div class="container">
 
 
     @component('admin.components.breadcrumb')
@@ -12,7 +11,8 @@
 
           <hr>
 
-          <a href="{{route('admin.transference.create')}}" class="btn btn-primary float-right" role="button"><i class="far fa-plus-square"> Поступление товара</i></a>
+          {{-- <a href="{{route('admin.transference.create')}}" class="btn btn-primary float-right" role="button"><i class="far fa-plus-square"> Поступление товара</i></a> --}}
+
           <br><br><br>
           <table class="table table-striped">
             <thead>
@@ -21,9 +21,9 @@
               <th>Дата</th>
               <th>Категория</th>
               <th>Наименование</th>
-              <th>Поставщик</th>
               <th>Количество</th>
-              <th>Цена, р.</th>
+              <th>Цена, р</th>
+              <th>Сумма, р</th>
               <th class="text-right">Действие</th>
             </thead>
             <tbody>
@@ -34,28 +34,25 @@
                       <p class="list-group-item-text">{{$subdivision->name}}</p>
                     @endforeach
                   </td>
-                  <td>{{$transference->ttn->number}}</td>
+                  <td>{{$transference->ttnproduct->ttn->number}}</td>
+                  <td>{{$transference->date}}</td>
                   <td>
-                    @if ($transference->date)
-                      {{$transference->date}}
-                    @else
-                      {{$transference->ttn->date}}</td>
-                    @endif
-                    <td>
-                      @foreach ($transference->product->categories as $category)
+                      @foreach ($transference->ttnproduct->product->categories as $category)
                         <p class="list-group-item-text">{{$category->title}}</p>
                       @endforeach
                     </td>
-                    <td><a href="{{route('admin.transference.show', $transference)}}">{{$transference->product->product_name}}, {{$transference->product->manufacturer}},
-                      {{$transference->product->quantity}} {{$transference->product->unit->type}}</a></td>
-                      <td>{{$transference->ttn->supplier->title}}</td>
+                    <td>{{$transference->ttnproduct->product->product_name}}, {{$transference->ttnproduct->product->manufacturer}},
+                      {{$transference->ttnproduct->product->quantity}} {{$transference->ttnproduct->product->unit->type}}</td>
                       <td>{{$transference->quantity}} {{$transference->unit->type}}</td>
                       <td>{{$transference->accounting_price}}</td>
+                      <td>{{$transference->accounting_sum}}</td>
                       <td class="text-right">
                         <form onsubmit="if(confirm('Удалить?')) {return true} else {return false}" action="{{route('admin.transference.destroy', $transference)}}" method="post">
                           <input type="hidden" name="_method" value="delete">
                           @csrf
-                          <a href="{{route('admin.transference.edit', $transference)}}"><i class="fas fa-exchange-alt"></i></a>
+                          <a href="{{route('admin.transference.transfer', $transference)}}"><i class="fas fa-exchange-alt"></i></i></a>
+                      
+                          {{-- <a href="{{route('admin.transference.edit', $transference)}}"><i class="far fa-edit"></i></a> --}}
                           <button type="submit" class="btn"><i class="far fa-trash-alt"></i></button>
                         </form>
                       </td>
@@ -76,5 +73,5 @@
                   </tr>
                 </tfoot>
               </table>
-            </div>
+
           @endsection

@@ -19,6 +19,7 @@
               <th>НДС входной, р</th>
               <th>НДС выходной, р</th>
               <th>Документ-основание</th>
+              <th class="text-right">Действие</th>
             </thead>
             <tbody>
               @forelse ($vats as $vat)
@@ -28,11 +29,24 @@
                   <td>{{$vat->vat_input}}</td>
                   <td>{{$vat->vat_output}}</td>
                   <td>
-@foreach ($transferences as $transference)
-@if ($vat->vatable == $transference)
-  <a href="{{route('admin.transference.show', $transference)}}">{{$transference->ttn->number}}</a>
+@foreach ($ttnproducts as $ttnproduct)
+@if ($vat->vatable == $ttnproduct)
+  <a href="{{route('admin.ttn.show', $ttnproduct->ttn)}}">{{$ttnproduct->ttn->number}}</a>
 @endif
 @endforeach
+@foreach ($costs as $cost)
+  @if ($vat->vatable == $cost)
+    <a href="{{route('admin.cost.show', $cost)}}">{{$cost->number}}</a>
+  @endif
+@endforeach
+                  </td>
+                  <td class="text-right">
+                    <form onsubmit="if(confirm('Удалить?')) {return true} else {return false}" action="{{route('admin.vat.destroy', $vat)}}" method="post">
+                      <input type="hidden" name="_method" value="delete">
+                      @csrf
+                      {{-- <a href="{{route('admin.ttn.edit', $ttn)}}"><i class="far fa-edit"></i></a> --}}
+                      <button type="submit" class="btn"><i class="far fa-trash-alt"></i></button>
+                    </form>
                   </td>
                 </tr>
               @empty

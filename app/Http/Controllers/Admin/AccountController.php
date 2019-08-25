@@ -37,7 +37,6 @@ class AccountController extends Controller
     public function store(Request $request)
     {
       if($request->has('supplier') && $request->has('account') && $request->has('bank')) {
-        // $menu = Menu::where('id', $request->menu)->first();
           Account::create([
             'supplier_id' => $request->input('supplier'),
             'bank_account' => $request->input('account'),

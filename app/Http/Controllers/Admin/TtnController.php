@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Ttn;
 use App\Supplier;
+use App\Transference;
+use App\Vat;
+use App\Ttnproduct;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -61,7 +64,19 @@ class TtnController extends Controller
      */
     public function show(Ttn $ttn)
     {
-        //
+      // $vat_sum = 0;
+      // $ttnproduct = Transference::where('ttn_id', $ttn->id)->get();
+      // foreach ($transferences as $transference) {
+      //   $vat = Vat::where('vatable_type', 'App\Transference')->where('vatable_id', $transference->id)->first();
+      //   $vat_sum += $vat->vat_input;
+      // }
+        return view('admin.ttns.show', [
+          'ttn' => $ttn,
+          'accounting_sum' => Ttnproduct::where('ttn_id', $ttn->id)->sum('accounting_sum'),
+          'vat_sum' => Ttnproduct::where('ttn_id', $ttn->id)->sum('vat_sum'),
+          'sum' => Ttnproduct::where('ttn_id', $ttn->id)->sum('sum'),
+
+        ]);
     }
 
     /**
@@ -95,6 +110,17 @@ class TtnController extends Controller
         $ttn->accounting_sum = $request['accounting_sum'];
         $ttn->supplier_id = $request->input('suppliers');
         $ttn->save();
+        $ttnproducts = Ttnproduct::with('ttn')->where('ttn_id', $ttn->id)->get();
+        foreach ($ttnproducts as $ttnproduct) {
+          $transference = Transference::with('ttnproduct')->where('ttnproduct_id', $ttnproduct->id)->first();
+            $transference->date = $ttn->date;
+            $transference->save();
+              }
+              foreach ($ttnproducts as $ttnproduct) {
+                $vat = Vat::where('vatable_type', 'App\Ttnproduct')->where('vatable_id', $ttnproduct->id)->first();
+                  $vat->date = $ttn->date;
+                  $vat->save();
+              }
         return redirect()->route('admin.ttn.index');
     }
 

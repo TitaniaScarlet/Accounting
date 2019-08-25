@@ -12,7 +12,7 @@
 
           <form class="form-horizontal" action="{{route('admin.transference.store')}}" method="post">
             @csrf
-            @include('admin.transferences.partials.form_create')
+            @include('admin.transferences.partials.form')
           </form>
 
         </div>

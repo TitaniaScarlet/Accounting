@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVatsTable extends Migration
+class CreateCostsTable extends Migration
 {
   /**
   * Run the migrations.
@@ -13,13 +13,14 @@ class CreateVatsTable extends Migration
   */
   public function up()
   {
-    Schema::create('vats', function (Blueprint $table) {
+    Schema::create('costs', function (Blueprint $table) {
       $table->bigIncrements('id');
-      $table->integer('vat_rate');
-      $table->decimal('vat_input')->nullable();
-      $table->decimal('vat_output')->nullable();
-      $table->integer('vatable_id');
-      $table->string('vatable_type');
+      $table->string('number')->nullable();
+      $table->date('date');
+      $table->decimal('price');
+      $table->decimal('accounting_price');
+      $table->integer('supplier_id');
+      $table->string('description');
       $table->timestamps();
     });
   }
@@ -31,6 +32,6 @@ class CreateVatsTable extends Migration
   */
   public function down()
   {
-    Schema::dropIfExists('vats');
+    Schema::dropIfExists('costs');
   }
 }

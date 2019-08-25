@@ -34,9 +34,6 @@ export default {
   },
   methods: {
     add: function() {
-      console.log(this.code)
-      console.log(this.number)
-      console.log(this.operator)
       axios({
         method: 'post',
         url: '/admin/phone',

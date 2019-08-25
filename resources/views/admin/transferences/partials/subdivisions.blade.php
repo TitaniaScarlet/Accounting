@@ -1,14 +1,12 @@
 @foreach ($subdivisions as $subdivision)
   <option value="{{$subdivision->id ?? ""}}"
-
-    @isset($transference->subdivision)
+    @isset($transference->subdivisions)
 @foreach ($transference->subdivisions as $subdivision_transference)
-@if ($transference->id == $subdivision_transference->id)
+@if ($subdivision->id == $subdivision_transference->id)
 selected = ""
 @endif
 @endforeach
     @endisset
-
 >
 {{$subdivision->name ?? ""}}
 </option>

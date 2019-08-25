@@ -20,18 +20,18 @@
               <th>Поставщик</th>
               <th>Сумма, р.</th>
               <th>НДС, р.</th>
-              <th>Сумма без НДС, р.</th>
+              <th>Сумма c НДС, р.</th>
               <th class="text-right">Действие</th>
             </thead>
             <tbody>
               @forelse ($ttns as $ttn)
                 <tr>
                   <td>{{$ttn->date}}</td>
-                  <td>{{$ttn->number}}</td>
+                  <td><a href="{{route('admin.ttn.show', $ttn)}}">{{$ttn->number}}</a></td>
                   <td>{{$ttn->supplier->title}}</td>
-                  <td>{{$ttn->sum}}</td>
-                  <td>{{$ttn->vat_sum}}</td>
                   <td>{{$ttn->accounting_sum}}</td>
+                  <td>{{$ttn->vat_sum}}</td>
+                  <td>{{$ttn->sum}}</td>
                   <td class="text-right">
                     <form onsubmit="if(confirm('Удалить?')) {return true} else {return false}" action="{{route('admin.ttn.destroy', $ttn)}}" method="post">
                       <input type="hidden" name="_method" value="delete">

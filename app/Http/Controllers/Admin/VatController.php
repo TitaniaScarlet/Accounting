@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Vat;
-use App\Transference;
+use App\Ttnproduct;
+use App\Cost;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -18,7 +19,9 @@ class VatController extends Controller
     {
         return view('admin.vats.index', [
         'vats' => Vat::latest('date')->paginate(10),
-        'transferences' => Transference::get()
+        // 'transferences' => Transference::get(),
+        'ttnproducts' => Ttnproduct::get(),
+        'costs' => Cost::get(),
         ]);
     }
 
@@ -85,6 +88,7 @@ class VatController extends Controller
      */
     public function destroy(Vat $vat)
     {
-        //
+      $vat->delete();
+      return redirect()->route('admin.vat.index');
     }
 }

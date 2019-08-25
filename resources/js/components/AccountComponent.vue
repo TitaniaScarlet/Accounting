@@ -34,7 +34,6 @@ export default {
         url: '/admin/account',
         params: {account: this.account, bank: this.bank, supplier: this.supplier}
       }).then((response) => {
-        console.log(response)
       });
     },
   }

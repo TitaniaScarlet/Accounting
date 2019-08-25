@@ -4,7 +4,8 @@
       <div class="col-sm-3">
         <label>Номер ТТН</label>
         <select type="text" class="custom-select" v-model="number">
-          <option v-for="ttn in sortedTtns" v-bind:value= "ttn" >{{ttn.number}}</option>
+          <option :value="number.id">{{number.number}}</option>
+          <option v-for="ttn in sortedTtns"  v-bind:value= "ttn">{{ttn.number}}</option>
         </select>
       </div>
       <div class="col-sm-3">
@@ -24,19 +25,21 @@
 <script>
 
 export default {
+  props: ['tt'],
   data: function() {
     return {
       sortKey: 'date',
       reverse: true,
       ttns: [],
       suppliers: [],
-      number: [],
+      number: [ ],
       date: '',
       search: ''
     };
   },
   mounted() {
     this.json()
+    console.log(this.tt)
   },
   computed: {
     sortedTtns() {
@@ -56,7 +59,6 @@ export default {
         url: '/admin/json/ttn',
         params: {ttn: newNumber.id, date: newNumber.date}
       }).then((response) => {
-        console.log(response)
       });
     },
   },
@@ -64,10 +66,11 @@ export default {
     json: function() {
       axios.get('/admin/json').
       then((response) => {
-        console.log(response)
         this.ttns = JSON.parse(response.data.ttns)
         this.suppliers = JSON.parse(response.data.suppliers)
       });
+
+
     },
   }
 }

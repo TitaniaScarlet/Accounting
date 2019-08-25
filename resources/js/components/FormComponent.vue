@@ -46,17 +46,7 @@ export default {
   mounted() {
     this.json()
   },
-  // watch: {
-  //   transfer: function(category) {
-  //    this.category = category
-  //    console.log(this.category)
-  //   },
-  // },
   methods: {
-    // transfer: function(category) {
-    //  this.category = category
-    //    console.log(this.category)
-    // },
     add: function() {
       console.log(this.category)
       console.log(this.quantity)

@@ -5,7 +5,7 @@
   <div class="container">
 
 @component('admin.components.breadcrumb')
-  @slot('title')Перемещение товара@endslot
+  @slot('title')Редактирование товара@endslot
     @slot('parent')Главная@endslot
       @slot('active')Товары@endslot
 @endcomponent
@@ -15,7 +15,7 @@
 <form class="form-horizontal" action="{{route('admin.transference.update', $transference)}}" method="post">
   @method('PUT')
     @csrf
-    @include('admin.transferences.partials.form_edit')
+    @include('admin.transferences.partials.form')
 
 
 </form>

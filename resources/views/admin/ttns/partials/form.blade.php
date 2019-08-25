@@ -27,15 +27,15 @@
 <div class="row">
   <div class="col-sm-3">
     <label for="">Сумма, р.</label>
-    <input type="text" class="form-control" name="sum" placeholder="Сумма" value="{{$ttn->sum ?? ""}}" required>
+    <input type="text" class="form-control" name="accounting_sum" placeholder="Сумма" value="{{$ttn->accounting_sum ?? ""}}" required>
   </div>
   <div class="col-sm-3">
     <label for="">Сумма НДС, р.</label>
     <input type="text" class="form-control" name="vat_sum" placeholder="Сумма НДС" value="{{$ttn->vat_sum ?? ""}}" required>
   </div>
   <div class="col-sm-3">
-    <label for="">Сумма без НДС, р.</label>
-    <input type="text" class="form-control" name="accounting_sum" placeholder="Сумма без НДС" value="{{$ttn->accounting_sum ?? ""}}" required>
+    <label for="">Сумма c НДС, р.</label>
+    <input type="text" class="form-control" name="sum" placeholder="Сумма c НДС" value="{{$ttn->sum ?? ""}}" required>
   </div>
 </div>
 <br>

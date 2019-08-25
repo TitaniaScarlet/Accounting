@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTransferencesTable extends Migration
+class CreateTtnproductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,18 @@ class CreateTransferencesTable extends Migration
      */
     public function up()
     {
-        Schema::create('transferences', function (Blueprint $table) {
+        Schema::create('ttnproducts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('ttn_id');
-            $table->date('date')->nullable();
+            $table->biginteger('ttn_id')->unsigned();
+            $table->foreign('ttn_id')->references('id')->on('ttns')->onDelete('cascade');
             $table->biginteger('product_id')->nullable();
             $table->integer('quantity');
             $table->biginteger('unit_id')->nullable();
-            $table->decimal('price');
             $table->decimal('accounting_price');
+            $table->decimal('accounting_sum');
+            $table->integer('vat_rate');
+            $table->decimal('vat_sum');
+            $table->decimal('sum');
             $table->timestamps();
         });
     }
@@ -33,6 +36,9 @@ class CreateTransferencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transferences');
+      Schema::table('ttnproducts', function (Blueprint $table) {
+          $table->dropForeign('ttnproducts_ttn_id_foreign');
+      });
+        Schema::dropIfExists('ttnproducts');
     }
 }

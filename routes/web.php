@@ -17,8 +17,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware'=> "can:e
   Route::resource('/product', 'ProductController', ['as'=>'admin']);
   Route::resource('/unit', 'UnitController', ['as'=>'admin']);
   Route::resource('/subdivision', 'SubdivisionController', ['as'=>'admin']);
+  Route::get('/transference/{transference}/transfer', 'TransferenceController@transfer')->name('admin.transference.transfer');
+  Route::put('/transference/{transference}/change', 'TransferenceController@change')->name('admin.transference.change');
   Route::resource('/transference', 'TransferenceController', ['as'=>'admin']);
+
   Route::resource('/ttn', 'TtnController', ['as'=>'admin']);
+  Route::resource('/ttnproduct', 'TtnproductController', ['as'=>'admin']);
   Route::resource('/menu', 'MenuController', ['as'=>'admin']);
   Route::resource('/ingredient', 'IngredientController', ['as'=>'admin']);
   Route::resource('/phone', 'PhoneController', ['as'=>'admin']);
@@ -27,6 +31,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware'=> "can:e
   Route::get('/json', 'JsonController@json')->name('admin.json');
   Route::post('/json/ttn', 'JsonController@ttn')->name('admin.ttn');
   Route::resource('/vat', 'VatController', ['as'=>'admin']);
+  Route::resource('/item', 'ItemController', ['as'=>'admin']);
+  Route::resource('/cost', 'CostController', ['as'=>'admin']);
+  // Route::get('/distribution', 'JsonController@distribution')->name('admin.distribution');
+  Route::resource('/distribution', 'DistributionController', ['as'=>'admin']);
   Route::group(['prefix' => 'user_managment', 'namespace' => 'UserManagment', 'middleware'=> "can:admin, App\User"], function() {
     Route::resource('/user', 'UserController', ['as' => 'admin.user_managment']);
   });

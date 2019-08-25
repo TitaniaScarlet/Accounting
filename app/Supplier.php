@@ -24,4 +24,9 @@ class Supplier extends Model
         {
          return $this->hasMany('App\Ttn');
         }
+        public function costs()
+        {
+         return $this->hasMany('App\Cost');
+        }
+
         }

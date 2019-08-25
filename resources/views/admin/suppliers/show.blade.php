@@ -68,27 +68,9 @@
       </tr>
     @endforelse
   </tbody>
-  
+
   <contract-component :supplier="{{$supplier->id}}"></contract-component>
 
-
-{{-- <h4>Телефоны</h4>
-<div class="row">
-  @foreach ($supplier->phones as $phone)
-    <div class="col-sm-4">
-      <label for="">Код</label>
-    <p><b>{{$phone->code}}</b></p>
-    </div>
-    <div class="col-sm-4">
-      <label for="">Номер</label>
-    <p><b>{{$phone->number}}</b></p>
-    </div>
-    <div class="col-sm-4">
-      <label for="">Оператор</label>
-    <p><b>{{$phone->operator}}</b></p>
-    </div>
-  @endforeach
-  </div> --}}
   <table class="table table-striped">
     <thead>
       <th>Код</th>

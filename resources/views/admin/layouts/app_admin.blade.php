@@ -43,12 +43,15 @@
                 <li class="dropdown-item"><a class="nav-link" href="{{route('admin.product.index')}}">Товары</a></li>
                 <li class="dropdown-item"><a class="nav-link" href="{{route('admin.unit.index')}}">Единицы измерения</a></li>
                 <li class="dropdown-item"><a class="nav-link" href="{{route('admin.subdivision.index')}}">Подразделения</a></li>
+                <li class="dropdown-item"><a class="nav-link" href="{{route('admin.item.index')}}">Статьи расходов</a></li>
               </div>
             </div>
 <li class="nav-item active"><a class="nav-link" href="{{route('admin.transference.index')}}">Движение товаров</a></li>
 <li class="nav-item active"><a class="nav-link" href="{{route('admin.ttn.index')}}">ТТН</a></li>
 <li class="nav-item active"><a class="nav-link" href="{{route('admin.menu.index')}}">Меню</a></li>
 <li class="nav-item active"><a class="nav-link" href="{{route('admin.vat.index')}}">НДС</a></li>
+<li class="nav-item active"><a class="nav-link" href="{{route('admin.cost.index')}}">Расходы</a></li>
+
           </ul>
 
           <!-- Right Side Of Navbar -->

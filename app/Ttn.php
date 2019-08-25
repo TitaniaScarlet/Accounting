@@ -12,8 +12,16 @@ class Ttn extends Model
    {
      return $this->belongsTo('App\Supplier');
    }
-   public function transferences()
-   {
-    return $this->hasMany('App\Transference');
-   }
+   // public function transferences()
+   // {
+   //  return $this->hasMany('App\Transference');
+   // }
+   public function costs()
+  {
+    return $this->hasMany('App\Cost');
+  }
+  public function ttnproducts()
+  {
+   return $this->hasMany('App\Ttnproduct');
+  }
 }

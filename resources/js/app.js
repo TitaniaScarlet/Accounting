@@ -19,13 +19,13 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('form-component', require('./components/FormComponent.vue').default);
-Vue.component('tree-component', require('./components/TreeComponent.vue').default);
 Vue.component('phone-component', require('./components/PhoneComponent.vue').default);
 Vue.component('account-component', require('./components/AccountComponent.vue').default);
 Vue.component('contract-component', require('./components/ContractComponent.vue').default);
 Vue.component('ttn-component', require('./components/TtnComponent.vue').default);
+Vue.component('ttnproduct-component', require('./components/TtnproductComponent.vue').default);
+
 
 
 /**

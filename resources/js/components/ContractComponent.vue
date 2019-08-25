@@ -35,7 +35,6 @@ export default {
         url: '/admin/contract',
         params: {date: this.date, contract: this.contract, supplier: this.supplier}
       }).then((response) => {
-        console.log(response)
       });
     },
   }
