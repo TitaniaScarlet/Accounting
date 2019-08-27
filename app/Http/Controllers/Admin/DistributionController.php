@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Distribution;
-use App\Transference;
+use App\Ttnproduct;
 use App\Cost;
 use App\Ttn;
 use Illuminate\Http\Request;
@@ -39,14 +39,16 @@ class DistributionController extends Controller
      */
     public function store(Request $request)
     {
-        $transferences = Transference::where('ttn_id', $request->ttn)->get();
+        $ttnproducts = Ttnproduct::where('ttn_id', $request->ttn)->get();
         $cost = Cost::where('id', $request->cost_id)->first();
         $ttn = Ttn::where('id', $request->ttn)->first();
-        foreach ($transferences as $transference) {
+        $cost->ttn_id = $request->ttn;
+        $cost->save();
+        foreach ($ttnproducts as $ttnproduct) {
           Distribution::create([
-            'transference_id' => $transference->id,
+            'ttnproduct_id' => $ttnproduct->id,
             'cost_id' => $cost->id,
-            'distribution_sum' => ($ttn->accounting_sum/$transference->accounting_price)*$cost->accounting_price
+            'distribution_sum' => ($ttnproduct->accounting_sum/$ttn->accounting_sum)*$cost->accounting_sum
           ]);
         }
         return redirect()->route('admin.cost.show', $cost);
@@ -71,7 +73,9 @@ class DistributionController extends Controller
      */
     public function edit(Distribution $distribution)
     {
-        //
+        return view('admin.distributions.edit', [
+          'distribution' => $distribution
+        ]);
     }
 
     /**
@@ -83,7 +87,11 @@ class DistributionController extends Controller
      */
     public function update(Request $request, Distribution $distribution)
     {
-        //
+      $distribution->distribution_sum = $request['distribution_sum'];
+      $distribution->save();
+      $cost = Cost::where('id', $distribution->cost_id)->first();
+      return redirect()->route('admin.cost.show', $cost);
+
     }
 
     /**

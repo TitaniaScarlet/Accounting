@@ -30,9 +30,6 @@ class Transference extends Model
   // public function ttn()  {
   //   return $this->belongsTo('App\Ttn');
   // }
-  public function distribution() {
-    return $this->hasOne('App\Distribution');
-  }
   public function ttnproduct()  {
     return $this->belongsTo('App\Ttnproduct');
   }

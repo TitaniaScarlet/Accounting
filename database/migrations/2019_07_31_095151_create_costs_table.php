@@ -17,10 +17,14 @@ class CreateCostsTable extends Migration
       $table->bigIncrements('id');
       $table->string('number')->nullable();
       $table->date('date');
-      $table->decimal('price');
-      $table->decimal('accounting_price');
+      $table->decimal('accounting_sum');
+      $table->integer('vat_rate');
+      $table->decimal('vat_sum');
+      $table->decimal('sum');
       $table->integer('supplier_id');
       $table->string('description');
+      $table->biginteger('ttn_id')->unsigned();
+      $table->foreign('ttn_id')->references('id')->on('ttns')->onDelete('cascade');
       $table->timestamps();
     });
   }
@@ -32,6 +36,9 @@ class CreateCostsTable extends Migration
   */
   public function down()
   {
+    Schema::table('distributions', function (Blueprint $table) {
+        $table->dropForeign('costs_ttn_id_foreign');
+    });
     Schema::dropIfExists('costs');
   }
 }

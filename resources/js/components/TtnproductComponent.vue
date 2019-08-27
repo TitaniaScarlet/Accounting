@@ -10,7 +10,7 @@
          </select>
         </div>
         <div class="col-sm-3">
-          <label>Цена</label>
+          <label>Подразделение</label>
           <select class="form-control" v-model="subdivision">
               <option v-for="subdivision in subdivisions" v-bind:value= "subdivision.id">{{subdivision.name}}</option>
          </select>

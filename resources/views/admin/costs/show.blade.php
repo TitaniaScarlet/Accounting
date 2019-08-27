@@ -25,7 +25,7 @@
 <hr>
 <div class="row">
   <div class="col-sm-3">
-    {{-- Серия и номер ТТН: <p><b>{{$cost->ttn->number}}</b></p> --}}
+    Серия и номер ТТН: <p><b>{{$cost->ttn->number}}</b></p>
   </div>
   <div class="col-sm-3">
     Статья расходов:<br>
@@ -40,20 +40,16 @@
 <hr>
 <div class="row">
   <div class="col-sm-3">
-    Цена, р.: <p><b>{{$cost->price}}</b></p>
+    Цена, р.: <p><b>{{$cost->accounting_sum}}</b></p>
   </div>
   <div class="col-sm-3">
-    @foreach ($cost->vats as $vat)
-      Ставка НДС, %: <p><b>{{$vat->vat_rate}}</b></p>
-    @endforeach
+      Ставка НДС, %: <p><b>{{$cost->vat_rate}}</b></p>
   </div>
   <div class="col-sm-3">
-    @foreach ($cost->vats as $vat)
-      Сумма НДС, р.: <p><b>{{$vat->vat_input}}</b></p>
-    @endforeach
+      Сумма НДС, р.: <p><b>{{$cost->vat_sum}}</b></p>
   </div>
   <div class="col-sm-3">
-Учетная цена, р.: <p><b>{{$cost->accounting_price}}</b></p>
+Учетная цена, р.: <p><b>{{$cost->sum}}</b></p>
   </div>
 </div>
 
@@ -67,8 +63,8 @@
     <select  class="custom-select" name="ttn">
       @foreach ($ttns as $ttn)
         <option value="{{$ttn->id ?? ""}}"
-          @isset($ttn->ttn_id)
-            @if ($ttn->ttn_id == $ttn->id)
+          @isset($cost->ttn_id)
+            @if ($cost->ttn_id == $ttn->id)
               selected=""
             @endif
           @endisset
@@ -92,8 +88,7 @@
     <tbody>
     @forelse ($distributions as $distribution)
       <tr>
-                <td>{{$distribution->transference->product->product_name}}, {{$distribution->transference->product->manufacturer}},
-                  {{$distribution->transference->product->quantity}} {{$distribution->transference->product->unit->type}}</td>
+                <td>{{$distribution->ttnproduct->product->product_name}}, {{$distribution->ttnproduct->product->manufacturer}}, {{$distribution->ttnproduct->product->quantity}} {{$distribution->ttnproduct->product->unit->type}}</td>
         <td>{{$distribution->distribution_sum}}</td>
         <td class="text-right">
           <form onsubmit="if(confirm('Удалить?')) {return true} else {return false}" action="{{route('admin.distribution.destroy', $distribution)}}" method="post">
@@ -111,11 +106,10 @@
     @endforelse
   </tbody>
   <tfoot>
-    <tr>
-      <td colspan="4">
-      </td>
-    </tr>
-  </tfoot>
+    <td>Итого</td>
+    <td>{{$distribution_sum}}</td>
+    <td></td>
+      </tfoot>
 </table>
 </div>
       @endsection

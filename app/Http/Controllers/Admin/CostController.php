@@ -37,7 +37,7 @@ class CostController extends Controller
           'suppliers' => Supplier::get(),
           'items' => Item::with('children')->where('parent_id', 0)->get(),
           'delimiter' => '',
-          // 'ttns' => Ttn::get()
+          'ttns' => Ttn::get()
         ]);
     }
 
@@ -52,24 +52,25 @@ class CostController extends Controller
         $cost = Cost::create([
           'number' => $request['number'],
           'date' => $request['date'],
-          'price' => $request['price'],
-          'accounting_price' => $request['accounting_price'],
+          'accounting_sum' => $request['accounting_sum'],
+          'vat_rate' => $request['vat_rate'],
+          'vat_sum' => $request['vat_sum'],
+          'sum' => $request['sum'],
 'description' => $request['description'],
 'supplier_id' => $request->input('suppliers'),
-// 'ttn_id' => $request->input('ttn')
+'ttn_id' => $request->input('ttn')
         ]);
-        if ($request->vat_rate && $request->vat_input) {
-          Vat::create([
-    'date' => $cost->date,
-    'vat_rate' => $request['vat_rate'],
-    'vat_input' => $request['vat_input'],
-    'vatable_id' => $cost->id,
-    'vatable_type' => 'App\Cost'
-          ]);
-        }
         if($request->input('items')) :
           $cost->items()->attach($request->input('items'));
         endif;
+        Vat::create([
+  'date' => $cost->date,
+  'vat_rate' => $cost->vat_rate,
+  'vat_input' => $cost->vat_sum,
+  'vatable_id' => $cost->id,
+  'vatable_type' => 'App\Cost'
+        ]);
+
         return redirect()->route('admin.cost.index');
     }
 
@@ -84,7 +85,8 @@ class CostController extends Controller
       return view('admin.costs.show', [
         'cost' => $cost,
         'ttns' => Ttn::latest('date')->get(),
-        'distributions' => Distribution::where('cost_id', $cost->id)->get()
+        'distributions' => Distribution::where('cost_id', $cost->id)->get(),
+        'distribution_sum' => Distribution::where('cost_id', $cost->id)->sum('distribution_sum')
       ]);
     }
 

@@ -22,7 +22,7 @@
               <th>Описание</th>
               <th>Сумма, р.</th>
               <th>НДС, р.</th>
-              <th>Сумма без НДС, р.</th>
+              <th>Сумма c НДС, р.</th>
               <th class="text-right">Действие</th>
             </thead>
             <tbody>
@@ -37,13 +37,9 @@
                   <td>{{$cost->number}}</td>
                   <td>{{$cost->supplier->title}}</td>
                   <td><a href="{{route('admin.cost.show', $cost)}}">{{$cost->description}}</a></td>
-                  <td>{{$cost->price}}</td>
-                   <td>
-                     @foreach ($cost->vats as $vat)
-                    {{$vat->vat_input}}
-                   @endforeach
-                 </td>
-                  <td>{{$cost->accounting_price}}</td>
+                  <td>{{$cost->accounting_sum}}</td>
+                   <td>{{$cost->vat_sum}}</td>
+                  <td>{{$cost->sum}}</td>
                   <td class="text-right">
                     <form onsubmit="if(confirm('Удалить?')) {return true} else {return false}" action="{{route('admin.cost.destroy', $cost)}}" method="post">
                       <input type="hidden" name="_method" value="delete">

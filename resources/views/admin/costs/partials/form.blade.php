@@ -26,7 +26,7 @@
   <br>
   <div class="row">
     <div class="col-sm-2">
-      {{-- <label for="">Серия и номер ТТН</label>
+      <label for="">Серия и номер ТТН</label>
       <select  class="custom-select" name="ttn">
         @foreach ($ttns as $ttn)
           <option value="{{$ttn->id ?? ""}}"
@@ -37,7 +37,7 @@
             @endisset
             >{{$ttn->number ?? ""}}</option>
           @endforeach
-        </select> --}}
+        </select>
     </div>
     <div class="col-sm-4">
       <label>Статья расходов</label>
@@ -53,20 +53,20 @@
   <br>
   <div class="row">
     <div class="col-sm-3">
-      <label for="">Цена, р</label>
-      <input type="text" class="form-control" name="price" placeholder="Цена" value="{{$cost->price ?? ""}}" required>
+      <label for="">Сумма, р</label>
+      <input type="text" class="form-control" name="accounting_sum" placeholder="Сумма" value="{{$cost->accounting_sum ?? ""}}" required>
     </div>
     <div class="col-sm-3">
       <label for="">Ставка НДС, %</label>
-      <input type="text" class="form-control" name="vat_rate" placeholder="Ставка НДС" value="{{$vat->vat_rate ?? ""}}" required>
+      <input type="text" class="form-control" name="vat_rate" placeholder="Ставка НДС" value="{{$cost->vat_rate ?? ""}}" required>
     </div>
     <div class="col-sm-3">
       <label for="">Сумма НДС, р</label>
-      <input type="text" class="form-control" name="vat_input" placeholder="Сумма НДС" value="{{$vat->vat_input ?? ""}}" required>
+      <input type="text" class="form-control" name="vat_sum" placeholder="Сумма НДС" value="{{$cost->vat_sum ?? ""}}" required>
     </div>
     <div class="col-sm-3">
-      <label for="">Учетная цена, р</label>
-      <input type="text" class="form-control" name="accounting_price" placeholder="Учетная цена" value="{{$cost->accounting_price ?? ""}}" required>
+      <label for="">Сумма c НДС, р</label>
+      <input type="text" class="form-control" name="sum" placeholder="Сумма с НДС" value="{{$cost->sum ?? ""}}" required>
     </div>
   </div>
   <br>

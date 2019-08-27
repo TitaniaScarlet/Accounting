@@ -15,8 +15,10 @@ class CreateCostItemTable extends Migration
     {
         Schema::create('cost_item', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('cost_id');
-            $table->integer('item_id');
+            $table->biginteger('cost_id')->unsigned();
+            $table->foreign('cost_id')->references('id')->on('costs')->onDelete('cascade');
+            $table->biginteger('item_id')->unsigned();
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +30,10 @@ class CreateCostItemTable extends Migration
      */
     public function down()
     {
+      Schema::table('cost_item', function (Blueprint $table) {
+          $table->dropForeign('cost_item_cost_id_foreign');
+          $table->dropForeign('cost_item_item_id_foreign');
+      });
         Schema::dropIfExists('cost_item');
     }
 }

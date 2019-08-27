@@ -12,9 +12,9 @@ class Distribution extends Model
  {
    return $this->belongsTo('App\Cost');
  }
- public function transference()
+ public function ttnproduct()
   {
-    return $this->belongsTo('App\Transference');
+    return $this->belongsTo('App\Ttnproduct');
   }
- 
+
 }

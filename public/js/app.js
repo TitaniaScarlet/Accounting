@@ -38092,7 +38092,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-3" }, [
-        _c("label", [_vm._v("Цена")]),
+        _c("label", [_vm._v("Подразделение")]),
         _vm._v(" "),
         _c(
           "select",
