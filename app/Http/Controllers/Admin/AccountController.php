@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Account;
+use App\Supplier;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -36,14 +37,13 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-      if($request->has('supplier') && $request->has('account') && $request->has('bank')) {
+      $supplier = Supplier::where('id', $request->supplier)->first();
           Account::create([
-            'supplier_id' => $request->input('supplier'),
-            'bank_account' => $request->input('account'),
-            'bank' => $request->input('bank'),
+            'supplier_id' => $request['supplier'],
+            'bank_account' => $request['bank_account'],
+            'bank' => $request['bank'],
         ]);
-              }
-      // return redirect()->route('admin.menu.show', Menu::with('ingredients')->where('id', $request->menu)->first());
+        return redirect()->route('admin.supplier.show', $supplier);
     }
 
     /**
@@ -65,7 +65,12 @@ class AccountController extends Controller
      */
     public function edit(Account $account)
     {
-        //
+      $supplier = Supplier::where('id', $account->supplier_id)->first();
+
+        return view ('admin.suppliers.accounts.edit', [
+          'account' => $account,
+          'supplier' => $supplier
+        ]);
     }
 
     /**
@@ -77,7 +82,12 @@ class AccountController extends Controller
      */
     public function update(Request $request, Account $account)
     {
-        //
+      $supplier = Supplier::where('id', $account->supplier_id)->first();
+            $account->bank_account = $request['bank_account'];
+            $account->bank = $request['bank'];
+            $account->save();
+        return redirect()->route('admin.supplier.show', $supplier);
+
     }
 
     /**

@@ -27,18 +27,4 @@ class JsonController extends Controller
     }
   }
 
-  public function distribution() {
-    $ttns = Ttn::get();
-    $transferences = Transference::get();
-    $products = Product::get();
-    // $costs = Cost::get();
-    return [
-      'ttns' => json_encode($ttns),
-      'transferences' => json_encode($transferences),
-      'products' => json_encode($products),
-
-      // 'costs' => json_encode($costs)
-    ];
-
-  }
 }

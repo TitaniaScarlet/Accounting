@@ -52,8 +52,6 @@
 Учетная цена, р.: <p><b>{{$cost->sum}}</b></p>
   </div>
 </div>
-
-{{-- <distribution-component :cost = "{{json_encode($cost)}}"></distribution-component> --}}
 <form class="form-horizontal" action="{{route('admin.distribution.store')}}" method="post">
   <input type="hidden" name="cost_id" value="{{$cost->id ?? ""}}">
   @csrf

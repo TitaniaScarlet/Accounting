@@ -28,14 +28,6 @@ class IngredientController extends Controller
      */
     public function create()
     {
-        $units = Unit::with('ingredients')->get();
-        $categories = Category::with('children')->where('parent_id',  0)->get();
-         $children = Category::with('children')->where('parent_id', '>',  0)->get();
-              return [
-            'units' => json_encode($units),
-          'categories'=> json_encode($categories),
-           'children' => json_encode($children),
-        ];
     }
 
     /**
@@ -46,16 +38,14 @@ class IngredientController extends Controller
      */
     public function store(Request $request)
     {
-
-      if($request->has('menu') && $request->has('category') && $request->has('quantity') && $request->has('unit')) {
-        $ingredient = Ingredient::create([
-            'category_id' => $request->input('category'),
-            'menu_id' => $request->input('menu'),
-            'quantity' => $request->input('quantity'),
-            'unit_id' => $request->input('unit')
-        ]);
-            }
-      return redirect()->route('admin.menu.show', $ingredient->menu);
+      $menu = Menu::where('id', $request->menu_id)->first();
+      Ingredient::create([
+'category_id' => $request['category'],
+'menu_id' => $request['menu_id'],
+'quantity' => $request['quantity'],
+'unit_id' => $request['unit']
+      ]);
+      return redirect()->route('admin.menu.show', $menu);
      }
 
     /**
@@ -77,7 +67,12 @@ class IngredientController extends Controller
      */
     public function edit(Ingredient $ingredient)
     {
-        //
+        return view ('admin.menus.ingredients.edit', [
+          'ingredient' => $ingredient,
+          'categories' => Category::with('children')->where('parent_id', 0)->get(),
+          'delimiter' => '',
+          'units' => Unit::get()
+        ]);
     }
 
     /**
@@ -89,7 +84,12 @@ class IngredientController extends Controller
      */
     public function update(Request $request, Ingredient $ingredient)
     {
-        //
+        $ingredient->category_id = $request['category'];
+        $ingredient->quantity = $request['quantity'];
+        $ingredient->unit_id = $request['unit'];
+        $ingredient->save();
+        $menu = Menu::where('id', $ingredient->menu_id)->first();
+        return redirect()->route('admin.menu.show', $menu);
     }
 
     /**

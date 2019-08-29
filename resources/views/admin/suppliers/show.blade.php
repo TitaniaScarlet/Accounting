@@ -43,6 +43,11 @@
   </div>
 </div>
 <hr>
+<form class="form-horizontal" action="{{route('admin.contract.store')}}" method="post">
+  @csrf
+  @include('admin.suppliers.contracts.form')
+</form>
+<br>
 <table class="table table-striped">
   <thead>
     <th>Дата</th>
@@ -58,6 +63,7 @@
           <form onsubmit="if(confirm('Удалить?')) {return true} else {return false}" action="{{route('admin.contract.destroy', $contract)}}" method="post">
             <input type="hidden" name="_method" value="delete">
             @csrf
+            <a href="{{route('admin.contract.edit', $contract)}}"><i class="far fa-edit"></i></a>
             <button type="submit" class="btn"><i class="far fa-trash-alt"></i></button>
           </form>
         </td>
@@ -68,9 +74,14 @@
       </tr>
     @endforelse
   </tbody>
+</table>
 
-  <contract-component :supplier="{{$supplier->id}}"></contract-component>
-
+  <br>
+  <form class="form-horizontal" action="{{route('admin.phone.store')}}" method="post">
+    @csrf
+  @include('admin.suppliers.phones.form')
+</form>
+<br>
   <table class="table table-striped">
     <thead>
       <th>Код</th>
@@ -88,6 +99,8 @@
             <form onsubmit="if(confirm('Удалить?')) {return true} else {return false}" action="{{route('admin.phone.destroy', $phone)}}" method="post">
               <input type="hidden" name="_method" value="delete">
               @csrf
+              <a href="{{route('admin.phone.edit', $phone)}}"><i class="far fa-edit"></i></a>
+
               <button type="submit" class="btn"><i class="far fa-trash-alt"></i></button>
             </form>
           </td>
@@ -98,8 +111,13 @@
         </tr>
       @endforelse
     </tbody>
-<phone-component :supplier="{{$supplier->id}}"></phone-component>
-
+  </table>
+  <br>
+  <form class="form-horizontal" action="{{route('admin.account.store')}}" method="post">
+    @csrf
+    @include('admin.suppliers.accounts.form')
+  </form>
+<br>
 <table class="table table-striped">
   <thead>
     <th>р/с IBAN</th>
@@ -115,6 +133,8 @@
           <form onsubmit="if(confirm('Удалить?')) {return true} else {return false}" action="{{route('admin.account.destroy', $account)}}" method="post">
             <input type="hidden" name="_method" value="delete">
             @csrf
+            <a href="{{route('admin.account.edit', $account)}}"><i class="far fa-edit"></i></a>
+
             <button type="submit" class="btn"><i class="far fa-trash-alt"></i></button>
           </form>
         </td>
@@ -125,8 +145,8 @@
       </tr>
     @endforelse
   </tbody>
-  <account-component :supplier="{{$supplier->id}}"></account-component>
-
+</table>
+  <br>
         </div>
 
       @endsection

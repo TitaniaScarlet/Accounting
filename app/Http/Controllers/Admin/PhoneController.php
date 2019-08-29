@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Phone;
+use App\Supplier;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -36,18 +37,15 @@ class PhoneController extends Controller
      */
     public function store(Request $request)
     {
-      if($request->has('supplier') && $request->has('code') && $request->has('number') && $request->has('operator')) {
-        // $menu = Menu::where('id', $request->menu)->first();
+      $supplier = Supplier::where('id', $request->supplier)->first();
           Phone::create([
-            'supplier_id' => $request->input('supplier'),
-            'code' => $request->input('code'),
-            'number' => $request->input('number'),
-            'operator' => $request->input('operator'),
-
+            'supplier_id' => $request['supplier'],
+            'code' => $request['code'],
+            'number' => $request['number'],
+            'operator' => $request['operator'],
         ]);
+        return redirect()->route('admin.supplier.show', $supplier);
               }
-      // return redirect()->route('admin.menu.show', Menu::with('ingredients')->where('id', $request->menu)->first());
-    }
 
     /**
      * Display the specified resource.
@@ -68,7 +66,12 @@ class PhoneController extends Controller
      */
     public function edit(Phone $phone)
     {
-        //
+      $supplier = Supplier::where('id', $phone->supplier_id)->first();
+
+      return view ('admin.suppliers.phones.edit', [
+        'phone' => $phone,
+        'supplier' => $supplier
+      ]);
     }
 
     /**
@@ -80,7 +83,13 @@ class PhoneController extends Controller
      */
     public function update(Request $request, Phone $phone)
     {
-        //
+      $supplier = Supplier::where('id', $phone->supplier_id)->first();
+        $phone->code = $request['code'];
+            $phone->number = $request['number'];
+            $phone->operator = $request['operator'];
+      $phone->save();
+        return redirect()->route('admin.supplier.show', $supplier);
+
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Contract;
+use App\Supplier;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -36,17 +37,17 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-      if($request->has('supplier') && $request->has('date') && $request->has('contract')) {
-        // $menu = Menu::where('id', $request->menu)->first();
+         $supplier = Supplier::where('id', $request->supplier)->first();
           Contract::create([
-            'supplier_id' => $request->input('supplier'),
-            'date' => $request->input('date'),
-            'number' => $request->input('contract'),
+            'supplier_id' => $request['supplier'],
+            'date' => $request['date'],
+            'number' => $request['number'],
         ]);
-              }
-      // return redirect()->route('admin.menu.show', Menu::with('ingredients')->where('id', $request->menu)->first());
+        return redirect()->route('admin.supplier.show', $supplier);
 
-    }
+              }
+
+
 
     /**
      * Display the specified resource.
@@ -67,7 +68,12 @@ class ContractController extends Controller
      */
     public function edit(Contract $contract)
     {
-        //
+      $supplier = Supplier::where('id', $contract->supplier_id)->first();
+
+        return view ('admin.suppliers.contracts.edit', [
+          'contract' => $contract,
+          'supplier' => $supplier
+        ]);
     }
 
     /**
@@ -79,7 +85,12 @@ class ContractController extends Controller
      */
     public function update(Request $request, Contract $contract)
     {
-        //
+      $supplier = Supplier::where('id', $contract ->supplier_id)->first();
+     $contract->date = $request['date'];
+     $contract->number = $request['number'];
+$contract->save();
+     return redirect()->route('admin.supplier.show', $supplier);
+
     }
 
     /**

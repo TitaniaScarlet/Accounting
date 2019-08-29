@@ -73,7 +73,7 @@ class DistributionController extends Controller
      */
     public function edit(Distribution $distribution)
     {
-        return view('admin.distributions.edit', [
+        return view('admin.costs.distributions.edit', [
           'distribution' => $distribution
         ]);
     }

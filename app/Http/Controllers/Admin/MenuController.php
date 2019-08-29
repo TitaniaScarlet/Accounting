@@ -70,7 +70,10 @@ class MenuController extends Controller
   {
     return view('admin.menus.show', [
       'menu' => $menu,
-      'ingredients' => Ingredient::get()
+      'ingredients' => Ingredient::get(),
+      'categories' => Category::with('children')->where('parent_id', 0)->get(),
+      'delimiter' => '',
+      'units' => Unit::get()
     ]);
   }
 
