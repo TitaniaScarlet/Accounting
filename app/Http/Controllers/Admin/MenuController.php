@@ -56,7 +56,11 @@ class MenuController extends Controller
     'title' => $request['title'],
     'slug' => $request['slug'],
     'parent_id' => $request['parent_id'],
-    'price' => $request['price']
+    'quantity' => $request['quantity'],
+    'unit_id' => $request->input('unit'),
+    'price' => $request['price'],
+    'vat_rate' => $request['vat_rate'],
+    'vat_sum' => $request['vat_sum']
   ]);
     return redirect()->route('admin.menu.index');
   }
@@ -102,8 +106,17 @@ class MenuController extends Controller
   */
   public function update(Request $request, Menu $menu)
   {
-    $category->update($request->except('slug'));
-    return redirect()->route('admin.category.index');
+    $menu->title = $request['title'];
+    $menu->parent_id = $request['parent_id'];
+    $menu->quantity = $request['quantity'];
+    if ($request->unit != 0) {
+      $menu->unit_id = $request->input('unit');
+    }
+    $menu->price = $request['price'];
+    $menu->vat_rate = $request['vat_rate'];
+    $menu->vat_sum = $request['vat_sum'];
+    $menu->save();
+    return redirect()->route('admin.menu.index');
   }
 
   /**
@@ -114,7 +127,11 @@ class MenuController extends Controller
   */
   public function destroy(Menu $menu)
   {
+    $menus_children = Menu::where('parent_id', $menu->id)->get();
     $menu->delete();
+    foreach ($menus_children as $menu_children) {
+    $menu_children->delete();
+    }
     return redirect()->route('admin.menu.index');
   }
 }

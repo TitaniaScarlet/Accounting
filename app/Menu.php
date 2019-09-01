@@ -24,4 +24,7 @@ class Menu extends Model
        {
          return $this->hasMany('App\Ingredient');
        }
+       public function unit()  {
+           return $this->belongsTo('App\Unit');
+         }
 }

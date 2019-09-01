@@ -15,7 +15,10 @@
           <table class="table table-striped">
             <thead>
               <th>Наименование</th>
+              <th>Количество</th>
               <th>Цена, р.</th>
+              <th>Ставка НДС, %</th>
+              <th>НДС, р</th>
               <th class="text-right">Действие</th>
             </thead>
             <tbody>
@@ -23,7 +26,7 @@
             </tbody>
             <tfoot>
               <tr>
-                <td colspan="3">
+                <td colspan="6">
                   <ul class="pagination float-right">
                     {{$menus->links()}}
                   </ul>

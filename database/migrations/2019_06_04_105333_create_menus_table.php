@@ -18,7 +18,11 @@ class CreateMenusTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->integer('parent_id')->nullable();
-            $table->decimal('price')->nullable();          
+            $table->integer('quantity')->nullable();
+            $table->integer('unit_id')->nullable();
+            $table->decimal('price')->nullable();
+            $table->integer('vat_rate')->nullable();
+            $table->decimal('vat_sum')->nullable();
             $table->timestamps();
         });
     }

@@ -94,7 +94,11 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+      $categories_children = Category::where('parent_id', $category->id)->get();
       $category->delete();
+      foreach ($categories_children as $category_children) {
+      $category_children->delete();
+      }
         return redirect()->route('admin.category.index');
     }
 }

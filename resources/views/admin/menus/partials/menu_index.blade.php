@@ -2,7 +2,14 @@
 @forelse ($menus as $menu_list)
   <tr>
   <td><a href="{{route('admin.menu.show', $menu_list)}}">{!! $delimiter ?? "" !!}{{$menu_list->title ?? ""}}</a></td>
+  <td>{{$menu_list->quantity ?? ""}}
+     @if ($menu_list->unit_id)
+    {{$menu_list->unit->type}}
+  @endif
+</td>
   <td>{{$menu_list->price ?? ""}}</td>
+  <td>{{$menu_list->vat_rate ?? ""}}</td>
+  <td>{{$menu_list->vat_sum ?? ""}}</td>
   <td class="text-right">
     <form onsubmit="if(confirm('Удалить?')) {return true} else {return false}" action="{{route('admin.menu.destroy', $menu_list)}}" method="post">
        <input type="hidden" name="_method" value="delete">
@@ -24,6 +31,6 @@
 @endif
 @empty
   <tr>
-    <td colspan="3" class="text-center"><h4>Данные отсутствуют</h4></td>
+    <td colspan="6" class="text-center"><h4>Данные отсутствуют</h4></td>
   </tr>
 @endforelse
